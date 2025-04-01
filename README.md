@@ -1,5 +1,108 @@
-# MeapLog
-A web app to log progress on my capstone project Meap as well as track my research
+# MEAP Project Management System
 
-## What is MEAP? 
-Mechatronic musical instruments, developed at VUW and elsewhere, have im- mense potential to deliver captivating audio-visual performances. Yet, this po- tential is limited by the divide between musicians’ technical expertise and the specialised knowledge currently needed to use these instruments. The aim of this project is to design, implement and evaluate MEAP (Mechatronic Ensemble Arrangement and Performance), a system which will bridge this gap between musicians and the mechatronic musical instruments, thus enabling musicians to fully explore the creative possibilities of these instruments. MEAP will be a system that is made up of a user-friendly VST plugin that interfaces with a server running syncronisation system, MechSync, allowing musicians to control mechatronic ensembles through their digital audio workstations (DAWs). It will simplify tasks such as setting up instruments, adjusting articulation parameters, and triggering performances. The result will be an intuitive tool that enhances mechatronic music creation, evaluated through musician feedback and technical testing.
+A web application for organizing and tracking progress of the MEAP capstone project. Built with React, Express, and MongoDB.
+
+## Features
+
+- Blog post management with markdown support
+- Research paper tracking system
+- User authentication for admin access
+- Public access to blog posts and research papers
+- Markdown support for blog posts and paper notes
+
+## Tech Stack
+
+### Frontend
+- React
+- Chakra UI
+- React Router
+- Axios
+
+### Backend
+- Express.js
+- MongoDB
+- JWT Authentication
+- Markdown-it
+
+## Project Structure
+
+```
+meaplog/
+├── frontend/           # React frontend application
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── context/
+│   │   └── utils/
+│   └── public/
+└── backend/           # Express backend application
+    ├── models/
+    ├── routes/
+    ├── controllers/
+    └── middleware/
+```
+
+## Getting Started
+
+### Prerequisites
+- Node.js (v14 or higher)
+- MongoDB
+- npm or yarn
+
+### Installation
+
+1. Clone the repository
+2. Install backend dependencies:
+   ```bash
+   cd backend
+   npm install
+   ```
+3. Install frontend dependencies:
+   ```bash
+   cd frontend
+   npm install
+   ```
+4. Create a .env file in the backend directory with the following variables:
+   ```
+   MONGODB_URI=your_mongodb_uri
+   JWT_SECRET=your_jwt_secret
+   PORT=5000
+   ```
+
+### Running the Application
+
+1. Start the backend server:
+   ```bash
+   cd backend
+   npm run dev
+   ```
+
+2. Start the frontend development server:
+   ```bash
+   cd frontend
+   npm start
+   ```
+
+The application will be available at `http://localhost:3000`
+
+## API Endpoints
+
+### Authentication
+- POST /api/auth/register - Register a new admin user
+- POST /api/auth/login - Login user
+
+### Blog Posts
+- GET /api/blog - Get all blog posts
+- GET /api/blog/:id - Get a specific blog post
+- POST /api/blog - Create a new blog post (admin only)
+- PUT /api/blog/:id - Update a blog post (admin only)
+- DELETE /api/blog/:id - Delete a blog post (admin only)
+
+### Research Papers
+- GET /api/papers - Get all research papers
+- GET /api/papers/:id - Get a specific paper
+- POST /api/papers - Add a new paper (admin only)
+- PUT /api/papers/:id - Update a paper (admin only)
+- DELETE /api/papers/:id - Delete a paper (admin only)
+- PUT /api/papers/:id/read - Mark paper as read/unread
+- PUT /api/papers/:id/notes - Update paper notes
