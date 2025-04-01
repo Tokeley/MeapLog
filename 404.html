@@ -8,8 +8,14 @@
         const path = window.location.pathname;
         // Remove /MeapLog from the path if it exists
         const cleanPath = path.replace('/MeapLog', '');
-        // Redirect to the correct URL with hash
-        window.location.href = '/MeapLog/#' + cleanPath;
+        
+        // If we're at the root path (/MeapLog), redirect to the homepage route
+        if (cleanPath === '' || cleanPath === '/') {
+            window.location.href = '/MeapLog/#/';
+        } else {
+            // For other paths, redirect with hash
+            window.location.href = '/MeapLog/#' + cleanPath;
+        }
     </script>
 </head>
 <body>
