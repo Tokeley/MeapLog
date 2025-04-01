@@ -10,7 +10,7 @@ import PrivateRoute from './components/PrivateRoute';
 const Routes = () => {
   return (
     <RouterRoutes>
-      <Route path="/" element={<Home />} />
+      <Route path="/MeapLog" element={<Home />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/blog/:id" element={<BlogPost />} />
       <Route path="/papers" element={<Papers />} />
