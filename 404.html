@@ -6,15 +6,13 @@
     <script>
         // Get the current path
         const path = window.location.pathname;
-        // Remove /MeapLog from the path if it exists
-        const cleanPath = path.replace('/MeapLog', '');
         
-        // If we're at the root path (/MeapLog), redirect to the homepage route
-        if (cleanPath === '' || cleanPath === '/') {
-            window.location.href = '/MeapLog/#/';
+        // If we're at the root path, redirect to the homepage route
+        if (path === '' || path === '/') {
+            window.location.href = '/#/';
         } else {
             // For other paths, redirect with hash
-            window.location.href = '/MeapLog/#' + cleanPath;
+            window.location.href = '/#' + path;
         }
     </script>
 </head>
