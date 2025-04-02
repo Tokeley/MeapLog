@@ -11,7 +11,7 @@ const Home = () => {
             Welcome to the MEAP Blog
           </Heading>
           <Text fontSize="xl" color="gray.600">
-            A place for organising and tracking progress on the MEAP capstone project
+            A place for organising and tracking progress on my capstone project: MEAP
           </Text>
         </Box>
 
