@@ -13,6 +13,7 @@ import {
   useDisclosure,
   CloseButton,
   Link,
+  Tooltip,
 } from '@chakra-ui/react';
 import {
   Modal,
@@ -174,9 +175,11 @@ const Papers = () => {
                   {paper.authors.join(', ')} ({paper.year})
                 </Text>
 
-                <Text color="gray.600" noOfLines={3}>
-                  {paper.abstract}
-                </Text>
+                <Tooltip label={paper.abstract} placement="top">
+                  <Text color="gray.600" noOfLines={3} cursor="help">
+                    {paper.abstract}
+                  </Text>
+                </Tooltip>
 
                 <HStack>
                   <Checkbox
