@@ -9,6 +9,7 @@ import {
   SimpleGrid,
   Badge,
   HStack,
+  Wrap,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { BlogPost } from '../types';
@@ -112,13 +113,13 @@ const Blog = () => {
                   {post.caption}
                 </Text>
 
-                <HStack wrap="wrap" gap={2}>
+                <Wrap spacing={2} maxW="100%">
                   {post.tags.map((tag) => (
-                    <Badge key={tag} colorScheme="blue">
+                    <Badge key={tag} colorScheme="blue" maxW="100%">
                       {tag}
                     </Badge>
                   ))}
-                </HStack>
+                </Wrap>
               </VStack>
             </Box>
           ))}

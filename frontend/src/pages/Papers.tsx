@@ -14,6 +14,7 @@ import {
   CloseButton,
   Link,
   Tooltip,
+  Wrap,
 } from '@chakra-ui/react';
 import {
   Modal,
@@ -188,11 +189,13 @@ const Papers = () => {
                   >
                     Read
                   </Checkbox>
-                  {paper.tags.map((tag) => (
-                    <Badge key={tag} colorScheme="blue">
-                      {tag}
-                    </Badge>
-                  ))}
+                  <Wrap spacing={2} maxW="100%">
+                    {paper.tags.map((tag) => (
+                      <Badge key={tag} colorScheme="blue" maxW="100%">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </Wrap>
                 </HStack>
 
                 <Button
