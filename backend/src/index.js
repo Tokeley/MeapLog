@@ -9,7 +9,10 @@ const paperRoutes = require('./routes/papers');
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: ['https://tokeley.github.io', 'http://localhost:5173'],
+  credentials: true
+}));
 app.use(express.json());
 
 // Database connection
