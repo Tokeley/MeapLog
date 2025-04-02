@@ -152,24 +152,6 @@ const Papers = () => {
                   <Heading as="h2" size="md">
                     {paper.title}
                   </Heading>
-                  {user?.isAdmin && (
-                    <HStack>
-                      <RouterLink to={`/admin/papers/${paper._id}`}>
-                        <IconButton
-                          aria-label="Edit paper"
-                          icon={<EditIcon />}
-                          variant="ghost"
-                        />
-                      </RouterLink>
-                      <IconButton
-                        aria-label="Delete paper"
-                        icon={<DeleteIcon />}
-                        colorScheme="red"
-                        variant="ghost"
-                        onClick={() => handleDelete(paper._id)}
-                      />
-                    </HStack>
-                  )}
                 </Box>
 
                 <Text color="gray.600">
@@ -189,22 +171,44 @@ const Papers = () => {
                   >
                     Read
                   </Checkbox>
-                  <Wrap spacing={2} maxW="100%">
-                    {paper.tags.map((tag) => (
-                      <Badge key={tag} colorScheme="blue" maxW="100%">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </Wrap>
+                  <Box overflowX="hidden" flex="1">
+                    <HStack spacing={2} overflowX="hidden">
+                      {paper.tags.map((tag) => (
+                        <Badge key={tag} colorScheme="blue" whiteSpace="nowrap">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </HStack>
+                  </Box>
                 </HStack>
 
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => handleViewNotes(paper)}
-                >
-                  View Notes
-                </Button>
+                <HStack justify="space-between">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleViewNotes(paper)}
+                  >
+                    View Notes
+                  </Button>
+                  {user?.isAdmin && (
+                    <HStack>
+                      <RouterLink to={`/admin/papers/${paper._id}`}>
+                        <IconButton
+                          aria-label="Edit paper"
+                          icon={<EditIcon />}
+                          variant="ghost"
+                        />
+                      </RouterLink>
+                      <IconButton
+                        aria-label="Delete paper"
+                        icon={<DeleteIcon />}
+                        colorScheme="red"
+                        variant="ghost"
+                        onClick={() => handleDelete(paper._id)}
+                      />
+                    </HStack>
+                  )}
+                </HStack>
 
                 {paper.url && (
                   <Link href={paper.url} isExternal color="blue.500">

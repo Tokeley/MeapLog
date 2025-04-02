@@ -10,8 +10,10 @@ import {
   Badge,
   HStack,
   Wrap,
+  IconButton,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
+import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import { BlogPost } from '../types';
 import { getBlogPosts, getBlogTags } from '../utils/api';
 import { useAuth } from '../context/AuthContext';
@@ -113,13 +115,34 @@ const Blog = () => {
                   {post.caption}
                 </Text>
 
-                <Wrap spacing={2} maxW="100%">
-                  {post.tags.map((tag) => (
-                    <Badge key={tag} colorScheme="blue" maxW="100%">
-                      {tag}
-                    </Badge>
-                  ))}
-                </Wrap>
+                <Box overflowX="hidden">
+                  <HStack spacing={2} overflowX="hidden">
+                    {post.tags.map((tag) => (
+                      <Badge key={tag} colorScheme="blue" whiteSpace="nowrap">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </HStack>
+                </Box>
+
+                {user?.isAdmin && (
+                  <HStack justify="flex-end">
+                    <RouterLink to={`/admin/blog/${post._id}`}>
+                      <IconButton
+                        aria-label="Edit post"
+                        icon={<EditIcon />}
+                        variant="ghost"
+                      />
+                    </RouterLink>
+                    <IconButton
+                      aria-label="Delete post"
+                      icon={<DeleteIcon />}
+                      colorScheme="red"
+                      variant="ghost"
+                      onClick={() => handleDelete(post._id)}
+                    />
+                  </HStack>
+                )}
               </VStack>
             </Box>
           ))}

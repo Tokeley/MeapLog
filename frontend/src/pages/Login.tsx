@@ -40,14 +40,6 @@ const Login = () => {
           <Heading as="h1" size="xl" mb={2}>
             Login
           </Heading>
-          <Text color="gray.600">
-            Don't have an account?{' '}
-            <RouterLink to="/register">
-              <Text as="span" color="blue.500">
-                Register here
-              </Text>
-            </RouterLink>
-          </Text>
         </Box>
 
         <Box as="form" onSubmit={handleSubmit}>
