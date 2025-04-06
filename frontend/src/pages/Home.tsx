@@ -8,7 +8,7 @@ const Home = () => {
       <VStack gap={8} align="stretch">
         <Box textAlign="center">
           <Heading as="h1" size="2xl" mb={4}>
-            Welcome to the MEAP Blog
+            Welcome to the MEAP Log
           </Heading>
           <Text fontSize="xl" color="gray.600">
             A place for organising and tracking progress on my capstone project: MEAP
