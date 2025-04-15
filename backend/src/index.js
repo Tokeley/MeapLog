@@ -10,7 +10,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: ['https://tokeley.github.io', 'http://localhost:5173'],
+  origin: ['https://tokeley.github.io', 'http://localhost:5173', 'https://meap-log.vercel.app'],
   credentials: true
 }));
 app.use(express.json());
