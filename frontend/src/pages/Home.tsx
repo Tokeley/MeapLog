@@ -32,7 +32,7 @@ const Home = () => {
           >
             <RouterLink to="/blog">
               <Heading as="h2" size="lg" mb={4}>
-                Blog Posts
+                Log Posts
               </Heading>
               <Text color="gray.600">
                 Read about the latest updates and progress on the MEAP project.
