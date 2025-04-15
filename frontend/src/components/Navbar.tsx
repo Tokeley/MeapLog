@@ -31,7 +31,7 @@ const Navbar = () => {
           </RouterLink>
           <Flex gap={4}>
             <RouterLink to="/blog">
-              <Box>Blog</Box>
+              <Box>Logs</Box>
             </RouterLink>
             <RouterLink to="/papers">
               <Box>Papers</Box>
