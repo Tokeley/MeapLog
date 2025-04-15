@@ -71,7 +71,7 @@ const Blog = () => {
       <VStack gap={8} align="stretch">
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Heading as="h1" size="xl">
-            Blog
+            Logs
           </Heading>
           {user?.isAdmin && (
             <RouterLink to="/admin/blog/new">
