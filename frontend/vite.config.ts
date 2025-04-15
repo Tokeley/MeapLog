@@ -1,16 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/MeapLog/', // This should match your GitHub repository name
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
+  base: process.env.NODE_ENV === 'production' ? '/' : '/MeapLog/',
   build: {
     chunkSizeWarningLimit: 2000,
     rollupOptions: {
@@ -23,7 +17,6 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    exclude: ['@uiw/react-markdown-editor'],
-    include: ['react-markdown']
-  }
+    include: ['boolbase', 'nth-check'],
+  },
 })
