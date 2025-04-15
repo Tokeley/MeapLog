@@ -1,5 +1,5 @@
 import { Box, Text, VStack, HStack } from '@chakra-ui/react';
-import { useMemo } from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
 
 const deliverables = {
   '1': 'Instrument report, abstract spec',
@@ -80,30 +80,32 @@ const tasks: Task[] = [
 ];
 
 const ProjectTimeline = () => {
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const [timelineWidth, setTimelineWidth] = useState<number>(0);
+
   const today = new Date();
   const chartStart = new Date('2025-03-01');
   const chartEnd = new Date('2025-10-31');
-  
+
   const totalDays = useMemo(() => {
     return Math.ceil((chartEnd.getTime() - chartStart.getTime()) / (1000 * 60 * 60 * 24));
   }, [chartEnd, chartStart]);
 
+  useEffect(() => {
+    if (timelineRef.current) {
+      setTimelineWidth(timelineRef.current.offsetWidth);
+    }
+  }, []);
+
   const getTaskPosition = (date: Date) => {
-    const daysFromStart = (Math.ceil((date.getTime() - chartStart.getTime()) / (1000 * 60 * 60 * 24)));
-    const position = (daysFromStart / totalDays) * 100;
-    console.log(`Date: ${date.toLocaleDateString()}, Days from start: ${daysFromStart}, Position: ${position}%`);
-    return position;
+    const daysFromStart = Math.ceil((date.getTime() - chartStart.getTime()) / (1000 * 60 * 60 * 24));
+    const positionPercent = (daysFromStart / totalDays);
+    return positionPercent;
   };
 
-  const getTodayPosition = () => {
-    console.log('Today:', today.toLocaleDateString());
-    console.log('Chart start:', chartStart.toLocaleDateString());
-    console.log('Chart end:', chartEnd.toLocaleDateString());
-    console.log('Total days:', totalDays);
-    const position = getTaskPosition(today);
-    console.log('Today position:', position);
-    return position;
-  };
+  const todayOffsetPx = useMemo(() => {
+    return timelineWidth * getTaskPosition(today);
+  }, [timelineWidth, today]);
 
   return (
     <Box
@@ -126,7 +128,7 @@ const ProjectTimeline = () => {
           <Box width="200px" flexShrink={0}>
             <Text fontWeight="bold">Task</Text>
           </Box>
-          <Box flex={1} position="relative">
+          <Box flex={1} position="relative" ref={timelineRef}>
             <HStack spacing={0} position="absolute" width="100%" top="0">
               {Array.from({ length: 8 }, (_, i) => {
                 const month = new Date(2025, i + 2); // March (2) to October (9)
@@ -148,55 +150,65 @@ const ProjectTimeline = () => {
         </HStack>
 
         {/* Today indicator */}
-        <Box
-          position="absolute"
-          left={`calc(185px + ${getTodayPosition()}%)`}
-          top="0"
-          bottom="0"
-          width="2px"
-          bg="red.500"
-          zIndex={2}
-        />
-        <Text
-          position="absolute"
-          left={`calc(165px + ${getTodayPosition()}%)`}
-          top="-20px"
-          fontSize="xs"
-          color="red.500"
-          whiteSpace="nowrap"
-          fontWeight="bold"
-        >
-          Today ({today.toLocaleDateString()})
-        </Text>
+        {timelineWidth > 0 && (
+          <>
+            <Box
+              position="absolute"
+              left={`${200 + todayOffsetPx}px`} // 200px is the sidebar width
+              top="0"
+              bottom="0"
+              width="2px"
+              bg="red.500"
+              zIndex={2}
+            />
+            <Text
+              position="absolute"
+              left={`${190 + todayOffsetPx}px`}
+              top="-20px"
+              fontSize="xs"
+              color="red.500"
+              whiteSpace="nowrap"
+              fontWeight="bold"
+            >
+              Today ({today.toLocaleDateString()})
+            </Text>
+          </>
+        )}
 
         {/* Tasks */}
         <Box position="relative">
-          {tasks.map((task) => (
-            <HStack
-              key={task.id}
-              spacing={0}
-              position="relative"
-              height="40px"
-              _hover={{ bg: 'gray.50' }}
-            >
-              <Box width="200px" flexShrink={0} p={2}>
-                <Text fontWeight="medium">{task.name}</Text>
-              </Box>
-              <Box flex={1} position="relative" height="100%">
-                <Box
-                  position="absolute"
-                  left={`${getTaskPosition(task.startDate)}%`}
-                  width={`${getTaskPosition(task.endDate) - getTaskPosition(task.startDate)}%`}
-                  height="20px"
-                  top="50%"
-                  transform="translateY(-50%)"
-                  bg="blue.500"
-                  borderRadius="md"
-                  opacity={0.8}
-                />
-              </Box>
-            </HStack>
-          ))}
+          {tasks.map((task) => {
+            const startOffset = getTaskPosition(task.startDate) * timelineWidth;
+            const endOffset = getTaskPosition(task.endDate) * timelineWidth;
+            const widthPx = endOffset - startOffset;
+
+            return (
+              <HStack
+                key={task.id}
+                spacing={0}
+                position="relative"
+                height="40px"
+                _hover={{ bg: 'gray.50' }}
+              >
+                <Box width="200px" flexShrink={0} p={2}>
+                  <Text fontWeight="medium">{task.name}</Text>
+                </Box>
+                <Box flex={1} position="relative" height="100%">
+                  <Box
+                    position="absolute"
+                    left={`${startOffset}px`}
+                    width={`${widthPx}px`}
+                    height="20px"
+                    top="50%"
+                    transform="translateY(-50%)"
+                    bg="blue.500"
+                    borderRadius="md"
+                    opacity={0.8}
+                  />
+                </Box>
+              </HStack>
+            );
+          })}
         </Box>
       </VStack>
     </Box>
